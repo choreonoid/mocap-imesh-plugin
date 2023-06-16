@@ -1,0 +1,197 @@
+# Japanese translations for Choreonoid package.
+# This file is distributed under the same license as the Choreonoid package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Choreonoid\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-17 00:51+0900\n"
+"PO-Revision-Date: 2012-02-21 19:18+0000\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Warning: Link {0} specified in \"bodyMarkers\" is not found."
+msgstr "警告： \"bodyMarkers\" で指定されているリンク {0} がみつかりません．"
+
+msgid "Warning: Empty marker node in \"bodyMarkers\"."
+msgstr "警告： \"bodyMarkers\" に空のマーカノード．"
+
+msgid "Warning: {0}-th element of Link {1} in \"bodyMarkers\" is not a valid vector."
+msgstr "警告： \"bodyMarkers\" のリンク{1}の{0}番目の要素は有効なベクタではありません．"
+
+msgid "No target body motions."
+msgstr "対象ボディモーションがありません．"
+
+msgid "Frame rate {0:.6f} of {1}-th motion is different from {2:.6f} of the first one."
+msgstr "{1}番目のモーションのフレームレート{0:.6f}は最初の{2:.6f}と異なります．"
+
+msgid "Motion {0} is empty."
+msgstr "モーション{0}は空です．"
+
+msgid "Tetrahedralize failed."
+msgstr "4面体化に失敗しました．"
+
+msgid "BodyInteractionMeshItem"
+msgstr "ボディインタラクションメッシュアイテム"
+
+msgid "IM-based Joint Limitter"
+msgstr "IMベースの関節リミッタ"
+
+msgid "Interpolation test using a body interaction mesh"
+msgstr "ボディインタラクションメッシュを用いた補間テスト"
+
+msgid "{0} cannot be set to the interaction mesh"
+msgstr "{0}をインタラクションメッシュにセットできません"
+
+msgid "Calculating the interaction mesh of {0} ..."
+msgstr "インタラクションメッシュ {0} を計算中 ..."
+
+msgid "OK!"
+msgstr ""
+
+msgid "failed."
+msgstr "失敗．"
+
+msgid "IM-based joint limitter"
+msgstr "IMベースの関節リミッタ"
+
+msgid "Solver type"
+msgstr "ソルバタイプ"
+
+msgid "Lagrange multiplier method solver"
+msgstr "ラグランジュ未定乗数法ソルバ"
+
+msgid "Total steps"
+msgstr "合計ステップ数"
+
+msgid "Laplacian deformation energy term"
+msgstr "ラプラシアン変形エネルギー項"
+
+msgid "Max Laplacian difference toward the original position"
+msgstr "オリジナル位置への最大ラプラシアン差分"
+
+msgid "Joint damping weight"
+msgstr "関節ダンピングの重み"
+
+msgid "Acceleration term weight"
+msgstr "加速度項の重み"
+
+msgid "Apply acceleration term only for the last step with partial velocity constraints"
+msgstr "加速度項を部分的な速度項と共に最終ステップのみに適用"
+
+msgid "Velocity constraints"
+msgstr "速度拘束"
+
+msgid "Initial steps for shrinking velocity limits"
+msgstr "速度リミット縮小のための初期ステップ数"
+
+msgid "Final steps for keeping previous velocity constraints"
+msgstr "同一速度拘束条件を維持する最終ステップ数"
+
+msgid "Shrink joint limit values globally"
+msgstr "関節リミット値をグローバルに縮小"
+
+msgid "Fix feet positions"
+msgstr "足の位置を固定"
+
+msgid "Only the current pose"
+msgstr "現在姿勢のみ"
+
+msgid "&Apply"
+msgstr "適用(&A)"
+
+msgid "Halfway-{0}"
+msgstr "中間処理-{0}"
+
+msgid "Steps"
+msgstr "ステップ数"
+
+msgid "Do interpolation in the Laplacian coordinate"
+msgstr "ラプラシアン座標で補間"
+
+msgid "Use quadratic form"
+msgstr "二次形式を使用"
+
+msgid "Interpolation Test"
+msgstr "補間テスト"
+
+msgid "Rendering"
+msgstr "レンダリング"
+
+msgid "Frame rate"
+msgstr "フレームレート"
+
+msgid "Number of frames"
+msgstr "フレーム数"
+
+msgid "Time length"
+msgstr "時間長"
+
+msgid "Time step"
+msgstr "タイムステップ"
+
+msgid "Color"
+msgstr "色"
+
+msgid "Line width"
+msgstr "線幅"
+
+msgid "No target marker motions."
+msgstr "対象マーカモーションがありません．"
+
+msgid "MarkerInteractionMeshItem"
+msgstr "マーカインタラクションメッシュアイテム"
+
+msgid "Retargeting with Interaction Mesh"
+msgstr "インタラクションメッシュによるリターゲティング"
+
+msgid "Retargeting"
+msgstr "リターゲティング"
+
+msgid "Warning: Character for {0} is not found."
+msgstr "警告： {0}用のキャラクタがみつかりません．"
+
+msgid "Interaction mesh deformation failed.\n"
+msgstr "インタラクションメッシュの変形に失敗しました．\n"
+
+msgid "Marker Motion Retargeting"
+msgstr "マーカモーションリターゲティング"
+
+msgid "Update laplacian coordinate constant every step"
+msgstr "全ステップでラプラシアン座標定数を更新"
+
+msgid "Laplacian distance weight power"
+msgstr "ラプラシアン距離の重み指数"
+
+msgid "Acceleration constraint weight"
+msgstr "加速度拘束の重み"
+
+msgid "Exclude bones from the laplacian coordinate"
+msgstr "ラプラシアン座標からボーンを除外"
+
+msgid "Follow the original foot positions"
+msgstr "元の足位置を追従"
+
+msgid "Weight for following the original collar positions"
+msgstr "元の襟位置追従の重み"
+
+msgid "RetargetedMarkerMotion"
+msgstr ""
+
+msgid "RetargetedMarkerMotions"
+msgstr ""
+
+msgid "Retargeting based on the intaraction mesh has started."
+msgstr "インタラクションメッシュに基づくリターゲティングを開始しました．"
+
+msgid "Step {0} is being processed."
+msgstr "ステップ{0}を処理中です．"
+
+msgid "Retargeting has completed."
+msgstr "リターゲティングを完了しました．"
+
+msgid "Retargeting failed."
+msgstr "リターゲティングに失敗しました．"
