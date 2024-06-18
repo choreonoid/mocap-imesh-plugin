@@ -230,10 +230,10 @@ bool BodyIMesh::initialize()
         std::copy(info->markers.begin(), info->markers.end(), allMarkers.begin() + markerIndex);
 
         if(info->motion){
-            auto pseq = info->motion->positionSeq();
+            auto sseq = info->motion->stateSeq();
             
             // check frame rate
-            double r = pseq->frameRate();
+            double r = sseq->frameRate();
             if(frameRate == 0.0){
                 frameRate = r;
             } else if(fabs(r - frameRate) > 1.0e-6){
@@ -243,7 +243,7 @@ bool BodyIMesh::initialize()
             }
 
             // check the number of frames
-            int n = pseq->numFrames();
+            int n = sseq->numFrames();
             if(n == 0){
                 os() << format(_("Motion {0} is empty."), i) << endl;
                 return false;
@@ -323,9 +323,9 @@ void BodyIMesh::getVertices(int frameIndex, std::vector<Vector3>& out_vertices) 
         
         if(frameIndex >= 0){
             if(info.motion){
-                auto pseq = info.motion->positionSeq();
-                int actualFrameIndex = std::min(frameIndex, pseq->numFrames() - 1);
-                auto& frame = pseq->frame(actualFrameIndex);
+                auto sseq = info.motion->stateSeq();
+                int actualFrameIndex = std::min(frameIndex, sseq->numFrames() - 1);
+                auto& frame = sseq->frame(actualFrameIndex);
                 Body* body = info.body;
                 int nj = std::min(body->numJoints(), frame.numJointDisplacements());
                 auto displacements = frame.jointDisplacements();
@@ -359,9 +359,9 @@ void BodyIMesh::getJointPositions(int bodyIndex, int frameIndex, std::vector<dou
     BodyInfo& info = *bodies[bodyIndex];
         
     if(frameIndex >= 0 && info.motion){
-        auto pseq = info.motion->positionSeq();
-        const int actualFrameIndex = std::min(frameIndex, pseq->numFrames() - 1);
-        auto& frame = pseq->frame(actualFrameIndex);
+        auto sseq = info.motion->stateSeq();
+        const int actualFrameIndex = std::min(frameIndex, sseq->numFrames() - 1);
+        auto& frame = sseq->frame(actualFrameIndex);
         int nj = frame.numJointDisplacements();
         out_q.resize(nj);
         auto displacements = frame.jointDisplacements();

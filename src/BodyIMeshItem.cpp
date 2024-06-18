@@ -504,7 +504,7 @@ void InterpolationTestDialog::onAccepted()
             BodyState initial;
             BodyState final;
             bodyItem->getInitialState(initial);
-            final.storePositions(*bodyItem->body());
+            final.storeStateOfBody(bodyItem->body());
             BodyMotionItemPtr motionItem = new BodyMotionItem;
             motionItem->setName(_("Interpolation Test"));
             bodyItem->addChildItem(motionItem);

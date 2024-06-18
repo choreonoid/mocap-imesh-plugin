@@ -316,7 +316,7 @@ void BodyIMeshSolverImpl::storeInitialRootTranslations()
         auto motion = info.currentStepMotion;
         auto dest = orgRootTranslations.part(i);
         int frameIndex = 0;
-        auto srcSeq = motion->positionSeq();
+        auto srcSeq = motion->stateSeq();
         Vector3 last;
         if(!motion || isSinglePoseMode){
             last = info.body->rootLink()->p();
@@ -349,15 +349,15 @@ void BodyIMeshSolverImpl::updateCurrentBodyPositions(int step, int frameIndex)
         const auto& motion = info.currentStepMotion;
 
         if(motion){
-            auto pseq = motion->positionSeq();
+            auto sseq = motion->stateSeq();
 
             int actualFrameIndex;
             if(isSinglePoseMode){
                 actualFrameIndex = step;
             } else {
-                actualFrameIndex = std::min(frameIndex, pseq->numFrames() - 1);
+                actualFrameIndex = std::min(frameIndex, sseq->numFrames() - 1);
             }
-            const auto& frame = pseq->frame(actualFrameIndex);
+            const auto& frame = sseq->frame(actualFrameIndex);
 
             int jointSpaceOffset = info.globalJointSpaceOffset;
         
@@ -612,8 +612,8 @@ void BodyIMeshSolverImpl::detectJointOverruns(int frameIndex, double dqRatio, bo
         int maskIndex = bodyInfo.globalJointIndexOffset;
         int globalJointIndex = bodyInfo.globalJointIndexOffset;
 
-        auto pseq = bodyInfo.currentStepMotion->positionSeq();
-        const auto& nextFrame = pseq->frame(std::min(frameIndex + 1, pseq->numFrames() - 1));
+        auto sseq = bodyInfo.currentStepMotion->stateSeq();
+        const auto& nextFrame = sseq->frame(std::min(frameIndex + 1, sseq->numFrames() - 1));
 
         vector<JointInfoPtr>& validJoints = bodyInfo.validJoints;
         for(size_t j=0; j < validJoints.size(); ++j){
@@ -792,9 +792,9 @@ bool BodyIMeshSolverImpl::apply()
             } else {
                 n = 1;
             }
-            auto pseq = motion->positionSeq();
-            pseq->setNumLinkPositionsHint(1);
-            pseq->setNumJointDisplacementsHint(info.body->numJoints());
+            auto sseq = motion->stateSeq();
+            sseq->setNumLinkPositionsHint(1);
+            sseq->setNumJointDisplacementsHint(info.body->numJoints());
             motion->setNumFrames(n);
             info.halfwayMotions[j] = motion;
         }
@@ -974,8 +974,8 @@ void BodyIMeshSolverImpl::storeSolution(int stepIndex)
         const Body* body = info.body;
         const int numJoints = body->numJoints();
         const bool hasRootDOF = (!body->isFixedRootModel() && !isFixedRootMode);
-        auto pseq0 = prevMotion->positionSeq();
-        auto pseq1 = updatedMotion->positionSeq();
+        auto sseq0 = prevMotion->stateSeq();
+        auto sseq1 = updatedMotion->stateSeq();
         
         int offset = info.globalJointSpaceOffset;
 
@@ -983,8 +983,8 @@ void BodyIMeshSolverImpl::storeSolution(int stepIndex)
 
             int row = offset;
             const int frameIndex0 = std::min(frameIndex, prevLastFrameIndex);
-            const auto& frame0 = pseq0->frame(frameIndex0);
-            auto& frame1 = pseq1->allocateFrame(frameIndex);
+            const auto& frame0 = sseq0->frame(frameIndex0);
+            auto& frame1 = sseq1->allocateFrame(frameIndex);
             
             if(hasRootDOF){
                 auto p0 = frame0.linkPosition(0);
@@ -1239,7 +1239,7 @@ bool BodyIMeshSolverImpl::doInterpolationTest(int numInterpolatedFrames, bool do
     for(size_t i = 0; i < posePairs.size(); ++i){
         PosePair& pair = *posePairs[i];
         mesh->addBody(pair.body);
-        pair.finalPose.restorePositions(*pair.body);
+        pair.finalPose.restoreStateToBody(pair.body);
         pair.motion->setDimension(numInterpolatedFrames, pair.body->numJoints(), 1);
     }
 
@@ -1254,7 +1254,7 @@ bool BodyIMeshSolverImpl::doInterpolationTest(int numInterpolatedFrames, bool do
 
     for(size_t i = 0; i < posePairs.size(); ++i){
         PosePair& pair = *posePairs[i];
-        pair.initialPose.restorePositions(*pair.body);
+        pair.initialPose.restoreStateToBody(pair.body);
         pair.motion->frame(0) << *pair.body;
     }
 
@@ -1332,7 +1332,7 @@ bool BodyIMeshSolverImpl::doInterpolationTest2(int numInterpolatedFrames)
     for(size_t i = 0; i < posePairs.size(); ++i){
         PosePair& pair = *posePairs[i];
         mesh->addBody(pair.body);
-        pair.finalPose.restorePositions(*pair.body);
+        pair.finalPose.restoreStateToBody(pair.body);
         pair.motion->setDimension(numInterpolatedFrames, pair.body->numJoints(), 1);
     }
 
@@ -1350,7 +1350,7 @@ bool BodyIMeshSolverImpl::doInterpolationTest2(int numInterpolatedFrames)
 
     for(size_t i = 0; i < posePairs.size(); ++i){
         PosePair& pair = *posePairs[i];
-        pair.initialPose.restorePositions(*pair.body);
+        pair.initialPose.restoreStateToBody(pair.body);
         pair.motion->frame(0) << *pair.body;
     }
 
