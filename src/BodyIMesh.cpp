@@ -39,7 +39,7 @@ void BodyIMesh::clear()
 
 bool BodyIMesh::addBody(BodyPtr body, std::shared_ptr<BodyMotion> motion)
 {
-    const Listing& markerListing = *body->info()->findListing("bodyMarkers");
+    const Listing& markerListing = *body->info()->findListing({ "body_markers", "bodyMarkers" });
     if(!markerListing.isValid()){
         return false;
     }
@@ -54,17 +54,17 @@ bool BodyIMesh::addBody(BodyPtr body, std::shared_ptr<BodyMotion> motion)
             if(link){
                 info->markers.push_back(make_shared<Marker>(link));
             } else {
-                os() << format(_("Warning: Link {0} specified in \"bodyMarkers\" is not found."),
+                os() << format(_("Warning: Link {0} specified in \"body_markers\" is not found."),
                                markerListing[i].toString()) << endl;
             }
         } else if(markerListing[i].isListing()){
             const Listing& markerNode = *markerListing[i].toListing();
             if(markerNode.empty()){
-                os() << _("Warning: Empty marker node in \"bodyMarkers\".") << endl;
+                os() << _("Warning: Empty marker node in \"body_markers\".") << endl;
             }
             Link* link = body->link(markerNode[0].toString());
             if(!link){
-                os() << format(_("Warning: Link {0} specified in \"bodyMarkers\" is not found."), link->name()) << endl;
+                os() << format(_("Warning: Link {0} specified in \"body_markers\" is not found."), link->name()) << endl;
             } else {
                 if(markerNode.size() == 1){
                     info->markers.push_back(make_shared<Marker>(link));
@@ -73,7 +73,7 @@ bool BodyIMesh::addBody(BodyPtr body, std::shared_ptr<BodyMotion> motion)
                     while(index < markerNode.size()){
                         const Listing& vectorNode = *markerNode[index++].toListing();
                         if(vectorNode.size() != 3){
-                            os() << format(_("Warning: {0}-th element of Link {1} in \"bodyMarkers\" is not a valid vector."),
+                            os() << format(_("Warning: {0}-th element of Link {1} in \"body_markers\" is not a valid vector."),
                                            index, link->name()) << endl;
                         } else {
                             const Vector3 p(vectorNode[0].toDouble(),
