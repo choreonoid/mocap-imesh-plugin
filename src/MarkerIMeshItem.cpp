@@ -12,18 +12,17 @@
 #include <cnoid/MainMenu>
 #include <cnoid/ItemTreeView>
 #include <cnoid/Archive>
+#include <cnoid/Format>
 #include <cnoid/Dialog>
 #include <cnoid/Button>
 #include <cnoid/SpinBox>
 #include <cnoid/LineEdit>
 #include <QGridLayout>
 #include <QDialogButtonBox>
-#include <fmt/format.h>
 #include "gettext.h"
 
 using namespace std;
 using namespace cnoid;
-using fmt::format;
 
 namespace {
 
@@ -168,7 +167,7 @@ void MarkerIMeshItem::updateMesh()
     }
             
     MessageView* mv = MessageView::instance();
-    mv->put(format(_("Calculating the interaction mesh of {0} ..."), name()));
+    mv->put(formatR(_("Calculating the interaction mesh of {0} ..."), name()));
     if(mesh_->update()){
         mv->putln(_("OK!"));
     } else {
@@ -195,7 +194,7 @@ void MarkerIMeshItem::onMarkerPositionChangeRequest
             solver.setMocapMappingPair(i, mocapMappingItem->mocapMapping(), nullptr);
         } else {
             MessageView::instance()->putln(
-                format(_("Warning: Character for {0} is not found."), motionItems[i]->name()));
+                formatR(_("Warning: Character for {0} is not found."), motionItems[i]->name()));
         }
         MarkerMotionPtr motion = mesh_->motion(i);
 
@@ -419,9 +418,9 @@ void RetargetingDialog::setRetargetingMotionItem(int index, MarkerMotionItem* mo
 
         auto& mocapMappingName = retargetMocapMappingItem->mocapMapping()->name();
         if(mocapMappingName.empty()){
-            outputMotionItem->setName(format("{0}-retargeted", outputMotionItem->name()));
+            outputMotionItem->setName(formatC("{0}-retargeted", outputMotionItem->name()));
         } else {
-            outputMotionItem->setName(format("{0}-{1}", outputMotionItem->name(), mocapMappingName));
+            outputMotionItem->setName(formatC("{0}-{1}", outputMotionItem->name(), mocapMappingName));
         }
         duplicatedMocapMappingItem->addChildItem(outputMotionItem);
     }

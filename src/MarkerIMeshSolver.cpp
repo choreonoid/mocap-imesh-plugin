@@ -1,5 +1,5 @@
 #include "MarkerIMeshSolver.h"
-#include <fmt/format.h>
+#include <cnoid/Format>
 #include <Eigen/Sparse>
 #include <Eigen/UmfPackSupport>
 #include <cnoid/stdx/optional>
@@ -8,7 +8,6 @@
 
 using namespace std;
 using namespace cnoid;
-using fmt::format;
 
 namespace {
 
@@ -377,7 +376,7 @@ bool MarkerIMeshSolver::Impl::solve(int numSteps, ostream& os)
 
     for(int step=0; step < numSteps; ++step){
 
-        os << format(_("Step {0} is being processed."), step + 1) << endl;
+        os << formatR(_("Step {0} is being processed."), step + 1) << endl;
 
         A.setZero();
         alpha = (double)(step + 1) / numSteps;

@@ -6,11 +6,11 @@
 #include <cnoid/MainMenu>
 #include <cnoid/RootItem>
 #include <cnoid/Archive>
+#include <cnoid/Format>
 #include <cnoid/Dialog>
 #include <cnoid/Button>
 #include <cnoid/SpinBox>
 #include <cnoid/ComboBox>
-#include <fmt/format.h>
 #include <QLabel>
 #include <QLayout>
 #include <QDialogButtonBox>
@@ -19,7 +19,6 @@
 
 using namespace std;
 using namespace cnoid;
-using fmt::format;
 
 namespace {
 
@@ -159,11 +158,11 @@ void BodyIMeshItem::updateMesh(bool pickupMotions)
             }
         }
         if(!mesh_->addBody(bodyItem->body(), motion)){
-            mvout() << format(_("{0} cannot be set to the interaction mesh"), bodyItem->name()) << endl;
+            mvout() << formatR(_("{0} cannot be set to the interaction mesh"), bodyItem->name()) << endl;
         }
     }
 
-    mvout() << format(_("Calculating the interaction mesh of {0} ..."), name()) << endl;
+    mvout() << formatR(_("Calculating the interaction mesh of {0} ..."), name()) << endl;
     if(mesh_->update()){
         mvout() << _("OK!") << endl;
     } else {
@@ -361,7 +360,7 @@ void JointLimitterDialog::applyBodyIMeshSolver()
                     BodyItem* bodyItem = meshItem->bodyItem(j);
                     for(int k=0; k < solver.numHalfwayMotions(); ++k){
                         BodyMotionItemPtr motionItem = new BodyMotionItem(solver.halfwayMotion(j, k));
-                        motionItem->setName(format(_("Halfway-{0}"), k));
+                        motionItem->setName(formatR(_("Halfway-{0}"), k));
                         motionItem->setTemporary(true);
                         bodyItem->addChildItem(motionItem);
                     }

@@ -2,13 +2,12 @@
 #include <cnoid/NullOut>
 #include <cnoid/Link>
 #include <cnoid/ValueTree>
-#include <fmt/format.h>
+#include <cnoid/Format>
 #include <set>
 #include "gettext.h"
 
 using namespace std;
 using namespace cnoid;
-using fmt::format;
 
 
 BodyIMesh::BodyIMesh()
@@ -54,8 +53,8 @@ bool BodyIMesh::addBody(BodyPtr body, std::shared_ptr<BodyMotion> motion)
             if(link){
                 info->markers.push_back(make_shared<Marker>(link));
             } else {
-                os() << format(_("Warning: Link {0} specified in \"body_markers\" is not found."),
-                               markerListing[i].toString()) << endl;
+                os() << formatR(_("Warning: Link {0} specified in \"body_markers\" is not found."),
+                                markerListing[i].toString()) << endl;
             }
         } else if(markerListing[i].isListing()){
             const Listing& markerNode = *markerListing[i].toListing();
@@ -64,7 +63,7 @@ bool BodyIMesh::addBody(BodyPtr body, std::shared_ptr<BodyMotion> motion)
             }
             Link* link = body->link(markerNode[0].toString());
             if(!link){
-                os() << format(_("Warning: Link {0} specified in \"body_markers\" is not found."), link->name()) << endl;
+                os() << formatR(_("Warning: Link {0} specified in \"body_markers\" is not found."), link->name()) << endl;
             } else {
                 if(markerNode.size() == 1){
                     info->markers.push_back(make_shared<Marker>(link));
@@ -73,8 +72,8 @@ bool BodyIMesh::addBody(BodyPtr body, std::shared_ptr<BodyMotion> motion)
                     while(index < markerNode.size()){
                         const Listing& vectorNode = *markerNode[index++].toListing();
                         if(vectorNode.size() != 3){
-                            os() << format(_("Warning: {0}-th element of Link {1} in \"body_markers\" is not a valid vector."),
-                                           index, link->name()) << endl;
+                            os() << formatR(_("Warning: {0}-th element of Link {1} in \"body_markers\" is not a valid vector."),
+                                            index, link->name()) << endl;
                         } else {
                             const Vector3 p(vectorNode[0].toDouble(),
                                             vectorNode[1].toDouble(),
@@ -237,15 +236,15 @@ bool BodyIMesh::initialize()
             if(frameRate == 0.0){
                 frameRate = r;
             } else if(fabs(r - frameRate) > 1.0e-6){
-                os() << format(_("Frame rate {0:.6f} of {1}-th motion is different from {2:.6f} of the first one."),
-                               r, i + 1, frameRate) << endl;
+                os() << formatR(_("Frame rate {0:.6f} of {1}-th motion is different from {2:.6f} of the first one."),
+                                r, i + 1, frameRate) << endl;
                 return false;
             }
 
             // check the number of frames
             int n = sseq->numFrames();
             if(n == 0){
-                os() << format(_("Motion {0} is empty."), i) << endl;
+                os() << formatR(_("Motion {0} is empty."), i) << endl;
                 return false;
             }
             nFrames = std::max(nFrames, n);

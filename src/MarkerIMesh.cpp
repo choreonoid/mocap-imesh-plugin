@@ -1,12 +1,11 @@
 #include "MarkerIMesh.h"
+#include <cnoid/Format>
 #include <tetgen.h>
-#include <fmt/format.h>
 #include <set>
 #include "gettext.h"
 
 using namespace std;
 using namespace cnoid;
-using fmt::format;
 
 
 MarkerIMesh::MarkerIMesh()
@@ -104,13 +103,13 @@ bool MarkerIMesh::update()
         MarkerMotionPtr motion = motions[i].motion;
         double r = motion->frameRate();
         if(fabs(r - frameRate) > 1.0e-6){
-            message_ = format(_("Frame rate {0:.6f} of {1}-th motion is different from {2:.6f} of the first one."),
-                              r, i + 1, frameRate);
+            message_ = formatR(_("Frame rate {0:.6f} of {1}-th motion is different from {2:.6f} of the first one."),
+                               r, i + 1, frameRate);
             return false;
         }
         int n = motion->numFrames() + motion->offsetTimeFrame();
         if(n == 0){
-            message_ = format(_("Motion {0} is empty."), i);;
+            message_ = formatR(_("Motion {0} is empty."), i);;
             return false;
         }
         maxFrame = std::max(maxFrame, n);
